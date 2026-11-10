@@ -9,9 +9,7 @@ three: Sebastian Mureșan ([@muresansebi999](https://github.com/muresansebi999))
 Cătălin Tira ([@tiracatalin](https://github.com/tiracatalin)).
 Forked from [muresansebi999/SportsBettingApp](https://github.com/muresansebi999/SportsBettingApp).
 
-<!-- TODO: capturi de ecran -->
 ![Matches and bet slip](docs/matches.png)
-![Bet history](docs/history.png)
 
 ## Features
 
@@ -53,11 +51,11 @@ Angular 21 client  ──HTTP/JSON──>  ASP.NET Core 8 Web API  ──EF Core
 
 ```bash
 cd Backend/BettingApp.API
-dotnet ef database update
 dotnet user-secrets set "OddsApi:ApiKey" "<your key>"   # optional, only for live odds
 dotnet run
 ```
 
+The SQLite database is created and migrated automatically on first start.
 Swagger UI is available at `/swagger` in development. A test account is seeded:
 `admin` / `password123`.
 
