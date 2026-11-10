@@ -12,12 +12,14 @@ namespace BettingApp.API.Controllers
     {
         private readonly DataContext _context;
         private static readonly HttpClient _httpClient = new HttpClient();
-        //intri pe https://the-odds-api.com si iti pui mail primesti key si pui aici intre ghilimele
-        private const string ApiKey = "9c276a6eef36217cd2f0e11c972f2dd6";
+        // The Odds API key is read from configuration (OddsApi:ApiKey),
+        // e.g. via user-secrets or the OddsApi__ApiKey environment variable.
+        private readonly string? _apiKey;
 
-        public MatchesController(DataContext context)
+        public MatchesController(DataContext context, IConfiguration config)
         {
             _context = context;
+            _apiKey = config["OddsApi:ApiKey"];
         }
 
         [HttpGet]
@@ -39,6 +41,9 @@ namespace BettingApp.API.Controllers
         [HttpPost("update")]
         public async Task<ActionResult> UpdateMatchesFromApi()
         {
+            if (string.IsNullOrWhiteSpace(_apiKey))
+                return BadRequest("OddsApi:ApiKey is not configured.");
+
             var sportKeys = new[] { "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a", "soccer_germany_bundesliga", "soccer_fifa_world_cup" };
 
             foreach (var sport in sportKeys)
@@ -71,7 +76,7 @@ namespace BettingApp.API.Controllers
         }
         private async Task UpdateOddsForSport(string sport)
         {
-            string url = $"https://api.the-odds-api.com/v4/sports/{sport}/odds/?apiKey={ApiKey}&regions=eu&markets=h2h";
+            string url = $"https://api.the-odds-api.com/v4/sports/{sport}/odds/?apiKey={_apiKey}&regions=eu&markets=h2h";
             var response = await _httpClient.GetAsync(url);
             if (!response.IsSuccessStatusCode) return;
 
@@ -114,7 +119,7 @@ namespace BettingApp.API.Controllers
 
         private async Task UpdateScoresForSport(string sport)
         {
-            string url = $"https://api.the-odds-api.com/v4/sports/{sport}/scores/?apiKey={ApiKey}&daysFrom=3";
+            string url = $"https://api.the-odds-api.com/v4/sports/{sport}/scores/?apiKey={_apiKey}&daysFrom=3";
             var response = await _httpClient.GetAsync(url);
             if (!response.IsSuccessStatusCode) return;
 

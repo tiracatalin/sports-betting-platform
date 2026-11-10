@@ -24,7 +24,7 @@ namespace BettingApp.API.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username)
             };
 
-           var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("acesta-este-un-token-key-foarte-lung-si-sigur-pentru-proiectul-meu-de-betting-2024!"));
+           var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
