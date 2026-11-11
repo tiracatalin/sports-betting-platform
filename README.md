@@ -4,9 +4,7 @@ A full-stack sports betting web app: user accounts with JWT authentication, live
 API, accumulator bets with server-side validation, automatic settlement and bet history.
 No real money is involved — accounts start with a virtual balance.
 
-University team project, Technical University of Cluj-Napoca (2026), built by a team of
-three: Sebastian Mureșan ([@muresansebi999](https://github.com/muresansebi999)), Loli Vasile and
-Cătălin Tira ([@tiracatalin](https://github.com/tiracatalin)).
+University team project, Technical University of Cluj-Napoca (2026).
 Forked from [muresansebi999/SportsBettingApp](https://github.com/muresansebi999/SportsBettingApp).
 
 ![Matches and bet slip](docs/matches.png)
